@@ -29,25 +29,6 @@ public class ProductController {
         return "index";
     }
 
-    @RequestMapping(value = "/buy/{id}", method = RequestMethod.GET)
-    public String buy(@PathVariable("id") int id, HttpSession session) {
-        if (session.getAttribute("cart") == null) {
-            List<Item> cart = new ArrayList<Item>();
-            cart.add(new Item(productService.find(id), 1));
-            session.setAttribute("cart", cart);
-        } else {
-            List<Item> cart = (List<Item>) session.getAttribute("cart");
-            int index = this.exists(id, cart);
-            if (index == -1) {
-                cart.add(new Item(productService.find(id), 1));
-            } else {
-                int quantity = cart.get(index).getQuantity() + 1;
-                cart.get(index).setQuantity(quantity);
-            }
-            session.setAttribute("cart", cart);
-        }
-        return "cart";
-    }
 
     @PostMapping("/addNewProduct")
     @ResponseBody

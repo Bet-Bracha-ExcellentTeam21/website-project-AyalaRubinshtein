@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "")
 public class CartController {
     private final ProductService productService;
 
@@ -21,11 +20,30 @@ public class CartController {
         this.productService = productService;
     }
 
-  /**  @RequestMapping(value = "index", method = RequestMethod.GET)
+  @RequestMapping(value = "cart", method = RequestMethod.GET)
     public String index() {
-        return "cart/index";
-    }*/
+        return "cart";
+    }
 
+  @RequestMapping(value = "/shoppingCart/{id}", method = RequestMethod.GET)
+  public String buy(@PathVariable("id") int id, HttpSession session) {
+      if (session.getAttribute("cart") == null) {
+          List<Item> cart = new ArrayList<Item>();
+          cart.add(new Item(productService.find(id), 1));
+          session.setAttribute("cart", cart);
+      } else {
+          List<Item> cart = (List<Item>) session.getAttribute("cart");
+          int index = this.exists(id, cart);
+          if (index == -1) {
+              cart.add(new Item(productService.find(id), 1));
+          } else {
+              int quantity = cart.get(index).getQuantity() + 1;
+              cart.get(index).setQuantity(quantity);
+          }
+          session.setAttribute("cart", cart);
+      }
+      return "redirect:cart";
+  }
 
     @RequestMapping(value = "remove/{id}", method = RequestMethod.GET)
     public String remove(@PathVariable("id") int id, HttpSession session) {
