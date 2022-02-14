@@ -374,8 +374,8 @@ Lower Header Section
                                     <h5 th:text="${product.productName}"> </h5>
                                     <span class="pull-right" th:text="${product.price}"></span>
                                         <a class="defaultBtn" href="product_details.html" title="Click to view"><span class="icon-zoom-in"></span></a>
-                                   <form th:href="@{'/shoppingCart/{id}'(id=${product.ID})}" >
-                                         <a class="shopBtn" title="add to cart"><span class="icon-plus"></span></a>
+                                   <form th:action="@{'/shoppingCart/{id}'(id=${product.ID})}" >
+                                         <a class="shopBtn" title="add to cart"></a>
                                              <input type="submit" class="shopBtn" value="add to cart" title="add to cart">
                                          </form>
                                     <div class="actionList">

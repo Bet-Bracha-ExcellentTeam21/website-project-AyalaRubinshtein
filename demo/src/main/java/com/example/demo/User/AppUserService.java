@@ -8,9 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
 @Service
-@AllArgsConstructor
 public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
@@ -19,13 +17,15 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public AppUserService(AppUserRepository appUserRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.appUserRepository = appUserRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND_MSG, email)));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return appUserRepository.findByEmail(email).orElseThrow(() ->
+                        new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
 
     public String signUpUser(AppUser appUser) {
@@ -40,14 +40,10 @@ public class AppUserService implements UserDetailsService {
             throw new IllegalStateException("email already taken");
         }
 
-        String encodedPassword = bCryptPasswordEncoder
-                .encode(appUser.getPassword());
-
+        String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
-
         appUserRepository.save(appUser);
-
-        return "It's work!";
+        return "Thanks for registration!";
     }
 
     public int enableAppUser(String email) {

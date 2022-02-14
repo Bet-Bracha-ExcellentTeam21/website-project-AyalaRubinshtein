@@ -36,8 +36,26 @@ public class ProductCofig {
                     "assets/img/carousel1.png",
                     "This is smart watch"
             );
+            Product classicDiamondRing = new Product("classic diamond ring",
+                    "ring",
+                    250,
+                    "assets/img/h.jpg",
+                    "This is very nice ring "
+            );
+            Product earring = new Product("earring",
+                    "watch",
+                    250,
+                    "assets/img/f.jpg",
+                    "This is nice earring"
+            );
+            Product blueRing = new Product("blue ring",
+                    "ring",
+                    380,
+                    "assets/img/j.jpg",
+                    "This is blue diamond ring"
+            );
             repository.saveAll(
-                    List.of(ringRole, necklace1, bracelets, smartWatch)
+                    List.of(ringRole, necklace1, bracelets, smartWatch, classicDiamondRing, earring, blueRing)
             );
         };
     }

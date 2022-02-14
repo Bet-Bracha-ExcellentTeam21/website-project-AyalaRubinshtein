@@ -137,7 +137,7 @@ Body Section
 		<li class="active">Check Out</li>
     </ul>
 	<div class="well well-small">
-		<h1>Shoping cart</h1>
+		<h1>Shoping cart <small class="pull-right" >  Items are in the cart </small></h1>
 	<hr class="soften"/>	
 
 	<table class="table table-bordered table-condensed">
@@ -164,36 +164,6 @@ Body Section
 				
 			</tbody>
 			</table>
-		<div class="container">
-			<section id="features">
-				<div class="container">
-					<div class="row aln-center">
-						<ul>
-							<li th:each="Item : ${session.cart}">
-								<div class="col-4 col-6-medium col-12-small">
-									<!-- Feature -->
-									<section>
-										<div class="image featured"
-										><img th:src="${Item.product.pathPicture}" alt=""
-										/></div>
-										<header>
-											<h5 th:text="${Item.product.productName}"></h5>
-										</header>
-										<p  th:text="${Item.product.price}"></p>
-										<div class="btn-group">
-											<form th:action="@{'removeProduct/{id}'(id=${Item.product.ID})}" >
-												<a class="shopBtn" title="remove"><span class="icon-plus"></span></a>
-												<input type="submit" class="shopBtn" value="remove">
-											</form>
-										</div>
-									</section>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-
-			</section>
 			<table class="table table-bordered">
 			<tbody>
                 <tr><td>ESTIMATE YOUR SHIPPING & TAXES</td></tr>
